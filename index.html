@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal</title>
+    <style>
+        body {
+            background-color: #f9f9f9; /* Light grey */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Navigation Bar Styles */
+        .navbar {
+            background-color: #f39c12; /* Yellow */
+            padding: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            margin: 0;
+            color: white;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            
+        }
+
+        .profile-image {
+            width: 30px; /* Size of the profile image */
+            height: 30px; /* Size of the profile image */
+            border-radius: 50%; /* Make it circular */
+            object-fit: cover; /* Cover the area without distortion */
+            margin-left: 10px; /* Space between text and image */
+        }
+
+        .container {
+            background-color: #fff; /* White */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px; /* Space below the navbar */
+        }
+
+        h1 {
+            color: #f39c12; /* Yellow */
+        }
+
+        label {
+            display: block;
+            margin-top:5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #f39c12; /* Yellow */
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e67e22; /* Darker yellow */
+        }
+
+        .logo {
+            display: block;
+            margin: 0 auto 20px; /* Center the logo and add some space below it */
+            max-width: 100px; /* Adjust the size of the logo */
+        }
+
+        /* Styles for the profile image */
+        .profile-image {
+            display: block;
+            margin: 20px auto; /* Center the image */
+            width: 100px; /* Size of the profile image */
+            height: 100px; /* Size of the profile image */
+            border-radius: 50%; /* Make it circular */
+            object-fit: cover; /* Cover the area without distortion */
+            border: 2px solid #f39c12; /* Optional: border around the image */
+        }
+
+        .image-upload {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <h2>Student Portal</h2>
+        <div class="dropdown">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Profile" class="profile-image">
+            <div class="dropdown-content">
+                <a href="#">Profile</a>
+                <a href="#">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <img src="    data:image/png;base64,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 "alt="School Logo" class="logo">
+        <h 1>Student Profile</h1>
+        <form id="student-form" enctype="multipart/form-data">
+            <label for="profile-image">Profile Image:</label>
+           <div class="image-upload">
+                <img id="profile-preview" src="#" alt="Profile Image Preview" class="profile-image" style="display: none;">
+                <input type="file" id="profile-image" name="profile-image" accept="image/*" onchange="previewImage(event)">
+            </div>
+
+            <label for="student-name">Name:</label>
+            <input type="text" id="student-name" name="student-name" required>
+
+            <label for="registration-number">Registration Number:</label>
+            <input type="text" id="registration-number" name="registration-number" required>
+
+            <label for="email">School Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+
+            <label for="phone-number">Phone Number:</label>
+            <input type="tel" id="phone-number" name="phone-number" required>
+
+            <label for="total-billed">Total Billed Fee:</label>
+            <input type="number" id="total-billed" name="total-billed" required>
+
+            <label for="total-paid">Total Paid:</label>
+            <input type="number" id="total-paid" name="total-paid" required>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function previewImage(event) {
+            const preview = document.getElementById('profile-preview');
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function() {
+                preview.src = reader.result;
+                preview.style.display = 'block';
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</body>
+</html>
